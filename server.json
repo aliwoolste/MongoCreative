@@ -23,6 +23,22 @@ mongo.connect('mongodb://127.0.0.1/mongochat', function(err, db){
         throw err;
       }
       //if not, emit messages to index file
+      socket.emit('output', res);
   });
+    
+    socket.on('input', function(data){
+      let name = data.name;
+      let message = data.message;
+      
+      chat.insert({name: name; message: message}, function(){
+        client.emit('output',[data]);
+        
+        //clear messages
+        socket.on('clear', function(data){
+          chat.remove({}), function() {
+            socket.emit('cleared');
+            
+         });
+        });
   
     
