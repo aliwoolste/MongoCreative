@@ -6,6 +6,7 @@ mongo.connect('mongodb://127.0.0.1/mongochat', function(err, db){
   if(err){
       throw err;
   }
+ }
   
   console.log('MONGO DB CONNECTED!!);
   
@@ -16,6 +17,7 @@ mongo.connect('mongodb://127.0.0.1/mongochat', function(err, db){
     sendStatus = function(s){
         socket.emit('status',s);
     }
+   });
     
     //get chats from mongo collection
     chat.find().sort({_id:1}).toArray(function(err, res){
