@@ -78,9 +78,34 @@
               }
             }
           });
+          socket.on('status', function(data){
+            setStatus((typeof data ==='object')? data.message : data);
+            
+            if(data.clear){
+              textarea.value = '';
+            }
+          });
+          
+          textarea.addEventListener('keydown', function(event){
+            if(event.which===13 && event.shiftkey == false){
+              socket.emit('input', {
+                name:username.value,
+                message:textarea.value
+              });
+            }
+              event.preventDefault();
+          })
+        
+          
+          clearBtn.addEventListener('click', function(){
+            socket.emit('clear');
+          });
+          
+          socket.on('cleared', function(){
+            messages.textContent = '';
+          });
         }
         
-
       })();
     </script>
 
